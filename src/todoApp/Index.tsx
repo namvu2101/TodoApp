@@ -21,7 +21,6 @@ export default function Todos() {
 
   const [input, setInput] = useState('');
   interface Item {
-    id: Number;
     text: String;
     completed: Boolean;
   }
@@ -59,14 +58,14 @@ export default function Todos() {
         <TextInput style={styles.input} onChangeText={setInput} value={input} />
         <Button onPress={handleAdd}>Thêm</Button>
       </View>
-      <FlatList
-        data={selector}
-        contentContainerStyle={{flex: 1}}
-        renderItem={(item: any, index: number) => (
-          <Items item={item} index={index + 1} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      
+        <FlatList
+          data={selector}
+          renderItem={(item: any, index: number) => (
+            <Items item={item} index={index + 1} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
     </View>
   );
 }
