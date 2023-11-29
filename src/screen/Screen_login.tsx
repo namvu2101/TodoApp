@@ -25,13 +25,13 @@ export default function Screen_login() {
   const navigation = useNavigation();
   const [account, setAccount] = useState('vpnam2k1@gmail.com');
   const [password, setPassword] = useState('123456');
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (account != User.email) {
       Alert.alert('Thông báo!', 'Email không chính xác');
     } else if (password != User.password) {
       Alert.alert('Thông báo!', 'Mật khẩu không chính xác');
     } else {
-      AsyncStorage.setItem('user', account);
+      await AsyncStorage.setItem('user', 'account');
       navigation.replace('MyTabs');
     }
   };

@@ -19,7 +19,6 @@ import {Button} from '@ui-kitten/components';
 export default function Todos() {
   const selector = useSelector(state => state.todo);
 
-  const [list, setlist] = useState(selector);
   const [input, setInput] = useState('');
   interface Item {
     id: Number;
@@ -63,7 +62,7 @@ export default function Todos() {
       <FlatList
         data={selector}
         contentContainerStyle={{flex: 1}}
-        renderItem={(item: Item, index: number) => (
+        renderItem={(item: any, index: number) => (
           <Items item={item} index={index + 1} />
         )}
         keyExtractor={(item, index) => index.toString()}

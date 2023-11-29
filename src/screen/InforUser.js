@@ -11,12 +11,14 @@ import React from 'react';
 import {User, list} from '../data';
 import LayoutAuth from '../components/LayoutAuth';
 import {SIZE} from '../constants/themp';
-import {Avatar} from 'react-native-paper';
+import {Avatar, Icon} from 'react-native-paper';
 import {Button} from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FONTS} from '../mylib/UIKit/text/Fonts';
+import { handlePickImage } from '../components/ImagePicker';
 
 export default function InforUser({navigation}) {
+  const [image, setImage] = React.useState(User.avatar);
   const handelLogout = () => {
     Alert.alert(
       'Thông báo',
@@ -28,11 +30,18 @@ export default function InforUser({navigation}) {
             AsyncStorage.setItem('user', '');
             navigation.replace('Login');
           },
-          text: 'Không',
         },
+        {text: 'Không'},
       ],
-      {cancelable},
+      {cancelable: true},
     );
+  };
+
+  const handelChangeImage = async () => {
+    const newImage = await handlePickImage()
+    if(newImage != 'Error'){
+      setImage(newImage)
+    }
   };
   return (
     <LayoutAuth>
@@ -46,18 +55,21 @@ export default function InforUser({navigation}) {
             height: SIZE.height / 3,
           }}>
           <Image
-            source={User.avatar}
+            source={image}
             style={{width: '100%', height: '100%'}}
             resizeMode="cover"
           />
 
           <Pressable onPress={() => {}} style={styles.avatar}>
             <Avatar.Image
-              source={User.avatar}
+              source={image}
               size={100}
               rounded
               avatarStyle={{resizeMode: 'contain'}}
             />
+            <Pressable style={{position: 'absolute'}} onPress={handelChangeImage}>
+              <Icon size={30} source={'camera'} color="white" />
+            </Pressable>
           </Pressable>
         </View>
         {list.map((field, index) => (
